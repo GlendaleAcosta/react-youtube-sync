@@ -84,9 +84,15 @@ module.exports = {
     // for React Native Web.
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
-      
+
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+      styles: path.resolve(paths.appSrc, 'styles/'),
+      images: path.resolve(paths.appSrc, 'images/'),
+      actions: path.resolve(paths.appSrc, 'js/actions'),
+      components: path.resolve(paths.appSrc, 'js/components'),
+      containers: path.resolve(paths.appSrc, 'js/containers'),
+      reducers: path.resolve(paths.appSrc, 'js/reducers'),
       'react-native': 'react-native-web',
     },
     plugins: [
@@ -115,7 +121,7 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
-              
+
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -144,7 +150,7 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              
+
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
