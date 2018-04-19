@@ -1,10 +1,16 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import NavbarContainer from 'containers/NavbarContainer';
+import { Route } from 'react-router-dom';
+import RegistrationPage from 'containers/RegistrationPage';
 
 class App extends React.Component {
   render () {
     return (
-      <h1>App</h1>
+      <div>
+        <NavbarContainer />
+        <Route exact path="/sign-up" component={RegistrationPage}/>
+        <Route exact path="/login" component={RegistrationPage}/>
+      </div>
     )
   }
 }
