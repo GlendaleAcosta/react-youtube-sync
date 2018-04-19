@@ -5,7 +5,6 @@ import { signUp } from 'actions/userActions';
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       email: '',
       username: '',

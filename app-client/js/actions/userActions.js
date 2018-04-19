@@ -7,9 +7,22 @@ function fetchUser() {
   };
 }
 
+function userFetched(user) {
+  return {
+    type: 'USER_FETCHED',
+    payload: user,
+  };
+}
+
+function errorFetchingUser(error) {
+  return {
+    type: 'ERROR',
+    payload: error,
+  };
+}
+
 
 export function signUp(user) {
-
   return function (dispatch) {
     dispatch(fetchUser());
     return axios({
@@ -18,18 +31,10 @@ export function signUp(user) {
       data: user,
     })
     .then((response) => {
-      console.log(response);
-      return {
-        type: 'USER_FETCHED',
-        payload: response.data.user,
-      };
+      dispatch(userFetched(response.data.user));
     })
     .catch((error) => {
-      console.log(error)
-      return {
-        type: 'ERROR',
-        payload: error,
-      };
+      dispatch(errorFetchingUser(error));
     });
   };
 }
@@ -49,7 +54,6 @@ export function login(filter) {
     };
   })
   .catch((error) => {
-    console.log(error);
     return {
       type: 'ERROR',
       payload: error,

@@ -1,6 +1,7 @@
 export default function reducer(state = {
   user: null,
   fetchingUser: false,
+  userFetched: false,
   error: false,
 }, action) {
   switch (action.type) {
@@ -15,6 +16,7 @@ export default function reducer(state = {
       return {
         ...state,
         fetchingUser: false,
+        userFetched: true,
         error: false,
         user: action.payload
       }
