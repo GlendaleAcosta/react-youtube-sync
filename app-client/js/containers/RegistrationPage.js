@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import SignUp from 'components/SignUp';
 import Login from 'components/Login';
 
@@ -10,8 +11,8 @@ class RegistrationPage extends React.Component {
 
   renderForm = () => {
     return (this.props.match.path === '/sign-up')
-    ? <SignUp />
-    : <Login />;
+    ? <SignUp {...this.props} />
+    : <Login {...this.props} />;
   }
 
   render () {
@@ -23,4 +24,10 @@ class RegistrationPage extends React.Component {
   }
 }
 
-export default RegistrationPage;
+function mapStateToProps(state) {
+  return {
+    userReducer: state.userReducer,
+  };
+}
+
+export default connect(mapStateToProps)(RegistrationPage);

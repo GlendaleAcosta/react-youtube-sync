@@ -16,9 +16,10 @@ app.use(express.static(path.join(__dirname, '../build')))
 
 
 // Controllers
-
+const userCtrl = require('./controllers/userCtrl');
 
 // Routes
+app.post('/sign-up', userCtrl.postSignUp);
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
