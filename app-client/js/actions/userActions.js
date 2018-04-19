@@ -52,7 +52,6 @@ export function login(user, token) {
       },
     })
     .then((response) => {
-      console.log(response);
       if (response.data.token)
         localStorage.setItem('token', response.data.token);
       dispatch(userFetched(response.data.user));
