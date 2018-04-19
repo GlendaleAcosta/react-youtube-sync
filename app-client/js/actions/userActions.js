@@ -1,12 +1,5 @@
 import axios from 'axios';
 
-function fetchUser() {
-  return {
-    type: 'FETCH_USER',
-    payload: null,
-  };
-}
-
 function userFetched(user) {
   return {
     type: 'USER_FETCHED',
@@ -21,6 +14,12 @@ function errorFetchingUser(error) {
   };
 }
 
+function fetchUser(token) {
+  return {
+    type: 'FETCH_USER',
+    payload: null,
+  };
+}
 
 export function signUp(user) {
   return function (dispatch) {
@@ -31,6 +30,8 @@ export function signUp(user) {
       data: user,
     })
     .then((response) => {
+      console.log(response);
+      localStorage.setItem('token', response.data.token);
       dispatch(userFetched(response.data.user));
     })
     .catch((error) => {
@@ -39,24 +40,33 @@ export function signUp(user) {
   };
 }
 
-export function login(filter) {
-  return axios({
-    method: 'GET',
-    url: `https://api.themoviedb.org/3/movie/${filter}`,
-    params: {
-      api_key: process.env.TMDB_KEY,
-    },
-  })
-  .then((response) => {
-    return {
-      type: 'GET_MOVIES',
-      payload: response.data,
-    };
-  })
-  .catch((error) => {
-    return {
-      type: 'ERROR',
-      payload: error,
-    };
-  });
+export function login(user, token) {
+  return function (dispatch) {
+    dispatch(fetchUser());
+    return axios({
+      method: 'POST',
+      url: '/login',
+      data: {
+        user,
+        token
+      },
+    })
+    .then((response) => {
+      console.log(response);
+      if (response.data.token)
+        localStorage.setItem('token', response.data.token);
+      dispatch(userFetched(response.data.user));
+    })
+    .catch((error) => {
+      dispatch(errorFetchingUser(error));
+    });
+  };
+}
+
+export function logout() {
+  localStorage.removeItem('token');
+  return {
+    type: 'LOGOUT',
+    payload: null
+  }
 }

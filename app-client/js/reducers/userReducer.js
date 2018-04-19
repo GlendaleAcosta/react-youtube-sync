@@ -27,6 +27,15 @@ export default function reducer(state = {
         error: action.payload
       }
     }
+    case 'LOGOUT': {
+      return {
+        ...state,
+        user: null,
+        userFetched: null,
+        fetchingUser: null,
+        error: null
+      }
+    }
     default: return state;
   }
 }

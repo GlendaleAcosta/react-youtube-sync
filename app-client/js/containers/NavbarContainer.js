@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import NavRight from 'components/Navbar/NavRight';
+import { connect } from 'react-redux';
 
 class NavbarContainer extends React.Component {
   constructor(props) {
@@ -26,14 +28,7 @@ class NavbarContainer extends React.Component {
               <Link className="nav-link" to="/">Third Link</Link>
             </li>
           </ul>
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="/sign-up">Sign Up</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
-          </ul>
+          <NavRight {...this.props} />
         </div>
       </nav>
 
@@ -41,4 +36,10 @@ class NavbarContainer extends React.Component {
   }
 }
 
-export default NavbarContainer;
+function mapStateToProps(state) {
+  return {
+    userReducer: state.userReducer,
+  };
+}
+
+export default connect(mapStateToProps)(NavbarContainer);

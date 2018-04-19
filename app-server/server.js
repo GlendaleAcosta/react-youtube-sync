@@ -20,6 +20,7 @@ const userCtrl = require('./controllers/userCtrl');
 
 // Routes
 app.post('/sign-up', userCtrl.postSignUp);
+app.post('/login', userCtrl.postLogin);
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });

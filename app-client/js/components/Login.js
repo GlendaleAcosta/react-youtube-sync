@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { login } from 'actions/userActions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -10,12 +11,20 @@ class Login extends React.Component {
     };
   }
 
+
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+
   login = (e) => {
     e.preventDefault();
+    const { email, password } = this.state;
+    const user = {
+      email,
+      password
+    };
+    this.props.dispatch(login(user));
   }
 
   render () {
