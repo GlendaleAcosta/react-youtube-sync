@@ -1,6 +1,6 @@
 import React from 'react'
 import NavbarContainer from 'containers/NavbarContainer';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Redirect } from 'react-router-dom';
 import RegistrationPage from 'containers/RegistrationPage';
 import { login } from 'actions/userActions';
 import { connect } from 'react-redux';
@@ -22,11 +22,22 @@ class App extends React.Component {
     // get popular rooms
   }
 
+  isLoggedIn = () => {
+    const { user, userFetched } = this.props.userReducer;
+    return (localStorage.getItem('token') && user && userFetched);
+  }
+
   renderApp = () => {
     // if loading user / messages / notifications / rooms ?
         // render loading screen
     // else
         // render App
+  }
+
+  renderRegistrationPage = (props) => {
+    return this.isLoggedIn()
+      ? <Redirect to="/" />
+      : <RegistrationPage {...props} />
   }
 
   render () {
@@ -36,8 +47,8 @@ class App extends React.Component {
       : (
         <div>
           <NavbarContainer />
-          <Route exact path="/sign-up" component={RegistrationPage}/>
-          <Route exact path="/login" component={RegistrationPage}/>
+          <Route exact path="/sign-up" render={this.renderRegistrationPage} />
+          <Route exact path="/login" render={this.renderRegistrationPage} />
         </div>
       )
   }
