@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 
-
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,7 +16,6 @@ app.use(express.static(path.join(__dirname, '../build')))
 
 
 // Controllers
-
 
 
 // Routes

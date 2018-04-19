@@ -1,6 +1,24 @@
+/* eslint no-restricted-globals: 0 */  // --> OFF
 import React from 'react';
 import ReactDOM from 'react-dom';
-import registerServiceWorker from './registerServiceWorker';
+import { BrowserRouter } from 'react-router-dom';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import reduxPromise from 'redux-promise';
 
-ReactDOM.render(<h1>Hello World!</h1>, document.getElementById('root'));
+import registerServiceWorker from './registerServiceWorker';
+import App from 'containers/App';
+import reducers from 'reducers';
+
+const middleware = applyMiddleware(reduxPromise);
+const store = createStore(reducers, middleware);
+
+
+ReactDOM.render(
+  <Provider store={store}>
+    <BrowserRouter history={history}>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById('root'));
 registerServiceWorker();
