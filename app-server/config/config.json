@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "glendaleacosta",
+    "password": null,
+    "database": "youtube_sync_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
