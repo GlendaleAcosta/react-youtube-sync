@@ -2,6 +2,7 @@ import React from 'react'
 import NavbarContainer from 'containers/NavbarContainer';
 import { Route, withRouter, Redirect } from 'react-router-dom';
 import RegistrationPage from 'containers/RegistrationPage';
+import RoomPageContainer from './RoomPageContainer';
 import { login, initalUserFetched } from 'actions/userActions';
 import { connect } from 'react-redux';
 
@@ -57,6 +58,7 @@ class App extends React.Component {
             <Route exact path="/sign-up" render={this.renderRegistrationPage} />
             <Route exact path="/login" render={this.renderRegistrationPage} />
             <Route exact path="/profile/:id" render={this.renderProfilePage} />
+            <Route exact path="/room/:roomId" component={RoomPageContainer} />
         </div>
       )
       : null

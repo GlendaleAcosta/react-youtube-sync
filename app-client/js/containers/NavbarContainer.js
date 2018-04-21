@@ -19,7 +19,7 @@ class NavbarContainer extends React.Component {
         <div className="collapse navbar-collapse justify-content-between">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+              <Link className="nav-link" to="/">Browse Rooms <span className="sr-only">(current)</span></Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/">Second Link</Link>
