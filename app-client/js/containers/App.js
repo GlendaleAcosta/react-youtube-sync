@@ -5,6 +5,7 @@ import RegistrationPage from 'containers/RegistrationPage';
 import RoomPageContainer from './RoomPageContainer';
 import { login, initalUserFetched } from 'actions/userActions';
 import { connect } from 'react-redux';
+import ModalContainer from 'containers/ModalContainer';
 
 class App extends React.Component {
   constructor(props) {
@@ -51,6 +52,7 @@ class App extends React.Component {
 
   render () {
     const { initialUserResourcesFetched } = this.props.userReducer;
+    const { modal } = this.props.modalReducer
     return (initialUserResourcesFetched)
       ? (
         <div>
@@ -59,6 +61,7 @@ class App extends React.Component {
             <Route exact path="/login" render={this.renderRegistrationPage} />
             <Route exact path="/profile/:id" render={this.renderProfilePage} />
             <Route exact path="/room/:roomId" component={RoomPageContainer} />
+            { modal ? <ModalContainer /> : null }
         </div>
       )
       : null
@@ -68,6 +71,7 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     userReducer: state.userReducer,
+    modalReducer: state.modalReducer
   };
 }
 
