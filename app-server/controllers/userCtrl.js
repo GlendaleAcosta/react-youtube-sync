@@ -9,13 +9,12 @@ exports.postSignUp = (req, res) => {
     password: req.body.password,
     username: req.body.username
   }})
-  .spread((user, created) => {
-    const modifiedUser = user.dataValues;
-    delete modifiedUser.password;
+  .spread((userModel, created) => {
     if (created) {
-      jwt.sign({ user: modifiedUser}, 'token_secret', function(err, token) {
+      const user = userModel.toJSON();
+      jwt.sign({ user: user}, 'token_secret', function(err, token) {
         return res.json({
-          user: modifiedUser,
+          user,
           token
         });
       });
@@ -28,8 +27,8 @@ exports.postSignUp = (req, res) => {
 };
 
 exports.postLogin = (req, res) => {
-  console.log(req.body);
   const { token } = req.body;
+  console.log(req.body);
   if (token) {
     jwt.verify(token, 'token_secret', (err, decoded) => {
       return res.json({
@@ -39,18 +38,19 @@ exports.postLogin = (req, res) => {
   } else if (req.body.user) {
     User
     .findOne({ where: { email: req.body.user.email }})
-    .then(user => {
-      if (!user)
+    .then(userModel => {
+      if (!userModel)
         return res.status(401).json({error: 'failed'});
-
-      const modifiedUser = user.dataValues;
-      delete modifiedUser.password;
-      jwt.sign({ user: modifiedUser}, 'token_secret', function(err, token) {
-        return res.json({
-          user: modifiedUser,
-          token
+      const validPassword = userModel.verifyPassword(req.body.user.password);
+      if (validPassword) {
+        const user = userModel.toJSON();
+        jwt.sign({ user: user}, 'token_secret', function(err, token) {
+          return res.json({
+            user: user,
+            token
+          });
         });
-      });
+      }
     });
   }
 };

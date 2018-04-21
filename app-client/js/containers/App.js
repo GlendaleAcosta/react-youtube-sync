@@ -53,10 +53,10 @@ class App extends React.Component {
     return (initialUserResourcesFetched)
       ? (
         <div>
-          <NavbarContainer />
-          <Route exact path="/sign-up" render={this.renderRegistrationPage} />
-          <Route exact path="/login" render={this.renderRegistrationPage} />
-          <Route exact path="/profile/:id" render={this.renderProfilePage} />
+            <NavbarContainer />
+            <Route exact path="/sign-up" render={this.renderRegistrationPage} />
+            <Route exact path="/login" render={this.renderRegistrationPage} />
+            <Route exact path="/profile/:id" render={this.renderProfilePage} />
         </div>
       )
       : null
