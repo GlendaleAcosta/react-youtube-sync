@@ -21,6 +21,13 @@ function fetchUser(token) {
   };
 }
 
+export function initalUserFetched() {
+  return {
+    type: 'INITIAL_RESOURCES_FETCHED',
+    payload: null
+  };
+}
+
 export function signUp(user) {
   return function (dispatch) {
     dispatch(fetchUser());
@@ -30,7 +37,6 @@ export function signUp(user) {
       data: user,
     })
     .then((response) => {
-      console.log(response);
       localStorage.setItem('token', response.data.token);
       dispatch(userFetched(response.data.user));
     })

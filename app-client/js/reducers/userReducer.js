@@ -3,6 +3,7 @@ export default function reducer(state = {
   fetchingUser: false,
   userFetched: false,
   error: false,
+  initialUserResourcesFetched: false,
 }, action) {
   switch (action.type) {
     case 'FETCH_USER': {
@@ -18,7 +19,10 @@ export default function reducer(state = {
         fetchingUser: false,
         userFetched: true,
         error: false,
-        user: action.payload
+        user: action.payload,
+        initialUserResourcesFetched: (!state.initialUserResourcesFetched)
+          ? true
+          : state.initialUserResourcesFetched
       }
     }
     case 'ERROR': {
@@ -34,6 +38,12 @@ export default function reducer(state = {
         userFetched: null,
         fetchingUser: null,
         error: null
+      }
+    }
+    case 'INITIAL_RESOURCES_FETCHED': {
+      return {
+        ...state,
+        initialUserResourcesFetched: true
       }
     }
     default: return state;
