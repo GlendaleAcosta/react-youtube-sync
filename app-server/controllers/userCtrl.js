@@ -2,16 +2,21 @@ const sequelize = require('../Sequelize');
 const DataTypes = require('sequelize/lib/data-types');
 const User = require('../models/User')(sequelize, DataTypes);
 const jwt = require('jsonwebtoken');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 exports.postSignUp = (req, res) => {
-  User
-  .findOrCreate({ where: { email: req.body.email }, defaults: {
+  User.findOrCreate({
+    where: {
+      [Op.or]: [{email: req.body.email}, {username: req.body.username}]
+  }, defaults: {
+    email: req.body.email,
     password: req.body.password,
-    username: req.body.username
+    username: req.body.username,
   }})
   .spread((userModel, created) => {
+    const user = userModel.toJSON();
     if (created) {
-      const user = userModel.toJSON();
       jwt.sign({ user: user}, 'token_secret', function(err, token) {
         return res.json({
           user,
@@ -19,16 +24,19 @@ exports.postSignUp = (req, res) => {
         });
       });
     } else {
-      return res.status(401).json({
-        error: 'failed'
-      });
+      const error = {};
+      if (req.body.email === user.email)
+        error.email = true;
+      if (req.body.username === user.username)
+        error.username = true;
+
+      return res.json({error});
     }
   });
 };
 
 exports.postLogin = (req, res) => {
   const { token } = req.body;
-  console.log(req.body);
   if (token) {
     jwt.verify(token, 'token_secret', (err, decoded) => {
       return res.json({
@@ -40,7 +48,7 @@ exports.postLogin = (req, res) => {
     .findOne({ where: { email: req.body.user.email }})
     .then(userModel => {
       if (!userModel)
-        return res.status(401).json({error: 'failed'});
+        return res.json({ error: { message: 'Incorrect email or password' }});
       const validPassword = userModel.verifyPassword(req.body.user.password);
       if (validPassword) {
         const user = userModel.toJSON();
@@ -50,6 +58,8 @@ exports.postLogin = (req, res) => {
             token
           });
         });
+      } else {
+        return res.json({ error: { message: 'Incorrect email or password' }});
       }
     });
   }

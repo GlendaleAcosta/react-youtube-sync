@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { login } from 'actions/userActions';
+import { login, clearValidationErrors } from 'actions/userActions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,7 +27,17 @@ class Login extends React.Component {
     this.props.dispatch(login(user));
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(clearValidationErrors('CLEAR_ALL'));
+  }
+
   render () {
+    const { error } = this.props.userReducer;
+    const invalidEmail = error.email ? 'is-invalid': null;
+    // const invalidUsername = error.username ? 'is-invalid': null;
+    const invalidMsg = error.message ? 'is-invalid': null;
+    console.log(error.message)
+    console.log(error);
     return (
       <div className="card-body">
         <h5 className="card-title">Login</h5>
@@ -41,7 +51,7 @@ class Login extends React.Component {
               onChange={this.handleChange}
               name="email"
               type="email"
-              className="form-control"
+              className={`form-control ${invalidMsg}`}
               placeholder="Enter email" />
           </div>
 
@@ -52,11 +62,12 @@ class Login extends React.Component {
               onChange={this.handleChange}
               name="password"
               type="password"
-              className="form-control"
+              className={`form-control ${invalidMsg}`}
               placeholder="Password"
             />
-          </div>
 
+            {(error.message) ? <div className="invalid-feedback">{error.message}</div> : null}
+          </div>
           <div className="d-flex col-md-12 p-0 justify-content-end">
             <button type="submit" className="btn btn-info">Login</button>
           </div>

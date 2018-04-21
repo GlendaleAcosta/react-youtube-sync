@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { signUp } from 'actions/userActions';
+import { signUp, clearValidationErrors } from 'actions/userActions';
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class SignUp extends React.Component {
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+    this.props.dispatch(clearValidationErrors(e.target.name));
   }
 
 
@@ -28,13 +29,19 @@ class SignUp extends React.Component {
     this.props.dispatch(signUp(user));
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(clearValidationErrors('CLEAR_ALL'));
+  }
+
   render () {
+    const { error } = this.props.userReducer;
+    const invalidEmail = error.email ? 'is-invalid': null;
+    const invalidUsername = error.username ? 'is-invalid': null;
     return (
       <div className="card-body">
         <h5 className="card-title">Sign Up</h5>
         <p>Already have an account? <Link to="/login">Login!</Link></p>
         <form onSubmit={this.signUp}>
-
           <div className="form-group">
             <label>Email address</label>
             <input
@@ -42,9 +49,10 @@ class SignUp extends React.Component {
               onChange={this.handleChange}
               name="email"
               type="email"
-              className="form-control"
+              className={`form-control ${invalidEmail}`}
               placeholder="Enter email" />
-            </div>
+            {invalidEmail ? <div className="invalid-feedback"> That email already exists. </div> : null}
+          </div>
 
           <div className="form-group">
             <label>Username</label>
@@ -53,9 +61,10 @@ class SignUp extends React.Component {
               onChange={this.handleChange}
               name="username"
               type="text"
-              className="form-control"
+              className={`form-control ${invalidUsername}`}
               placeholder="Enter username"
             />
+          {invalidUsername ? <div className="invalid-feedback"> That username already exists. </div> : null}
           </div>
 
           <div className="form-group">

@@ -28,6 +28,24 @@ export function initalUserFetched() {
   };
 }
 
+export function clearValidationErrors(name) {
+  if (name === 'CLEAR_ALL') {
+    return {
+      type: 'CLEAR_VALIDATION_ERRORS',
+      payload: {
+        email: null,
+        username: null,
+        message: null
+      }
+    };
+  } else {
+    return {
+      type: 'CLEAR_VALIDATION_ERRORS',
+      payload: name
+    };
+  }
+}
+
 export function signUp(user) {
   return function (dispatch) {
     dispatch(fetchUser());
@@ -37,8 +55,13 @@ export function signUp(user) {
       data: user,
     })
     .then((response) => {
-      localStorage.setItem('token', response.data.token);
-      dispatch(userFetched(response.data.user));
+      console.log(response.data.error);
+      if (response.data.error) {
+        dispatch(errorFetchingUser(response.data.error));
+      } else {
+        localStorage.setItem('token', response.data.token);
+        dispatch(userFetched(response.data.user));
+      }
     })
     .catch((error) => {
       dispatch(errorFetchingUser(error));
@@ -58,9 +81,15 @@ export function login(user, token) {
       },
     })
     .then((response) => {
-      if (response.data.token)
+      console.log(response);
+      if (response.data.error) {
+        dispatch(errorFetchingUser(response.data.error));
+      } else if (response.data.token) {
         localStorage.setItem('token', response.data.token);
-      dispatch(userFetched(response.data.user));
+        dispatch(userFetched(response.data.user));
+      } else {
+        dispatch(userFetched(response.data.user));
+      }
     })
     .catch((error) => {
       dispatch(errorFetchingUser(error));

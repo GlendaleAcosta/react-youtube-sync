@@ -2,7 +2,11 @@ export default function reducer(state = {
   user: null,
   fetchingUser: false,
   userFetched: false,
-  error: false,
+  error: {
+    email: null,
+    username: null,
+    message: null
+  },
   initialUserResourcesFetched: false,
 }, action) {
   switch (action.type) {
@@ -10,7 +14,6 @@ export default function reducer(state = {
       return {
         ...state,
         fetchingUser: true,
-        error: false
       };
     }
     case 'USER_FETCHED': {
@@ -18,7 +21,11 @@ export default function reducer(state = {
         ...state,
         fetchingUser: false,
         userFetched: true,
-        error: false,
+        error: {
+          email: null,
+          username: null,
+          message: null
+        },
         user: action.payload,
         initialUserResourcesFetched: (!state.initialUserResourcesFetched)
           ? true
@@ -28,6 +35,8 @@ export default function reducer(state = {
     case 'ERROR': {
       return {
         ...state,
+        fetchingUser: false,
+        userFetched: false,
         error: action.payload
       }
     }
@@ -37,13 +46,26 @@ export default function reducer(state = {
         user: null,
         userFetched: null,
         fetchingUser: null,
-        error: null
+        error: {
+          email: null,
+          username: null,
+          message: null
+        },
       }
     }
     case 'INITIAL_RESOURCES_FETCHED': {
       return {
         ...state,
         initialUserResourcesFetched: true
+      }
+    }
+    case 'CLEAR_VALIDATION_ERRORS': {
+      return {
+        ...state,
+        error: {
+          ...state.error,
+          [action.payload]: null
+        }
       }
     }
     default: return state;
