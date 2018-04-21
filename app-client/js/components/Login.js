@@ -11,7 +11,6 @@ class Login extends React.Component {
     };
   }
 
-
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -33,8 +32,6 @@ class Login extends React.Component {
 
   render () {
     const { error } = this.props.userReducer;
-    const invalidEmail = error.email ? 'is-invalid': null;
-    // const invalidUsername = error.username ? 'is-invalid': null;
     const invalidMsg = error.message ? 'is-invalid': null;
     console.log(error.message)
     console.log(error);
