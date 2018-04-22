@@ -16,7 +16,7 @@ class ModalContainer extends React.Component {
   render () {
     const { modal } = this.props.modalReducer;
     return (
-      <div className="modal-container d-flex justify-content-center align-items-center m-0">
+      <div className="modal-container d-flex justify-content-center">
         { (modal === 'YouTubeSearchModal') ? <YouTubeSearchModal {...this.props} /> : null }
 
         <div onClick={this.closeModal} className="modal-dark-bg" />
@@ -28,6 +28,7 @@ class ModalContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     modalReducer: state.modalReducer,
+    youtubeReducer: state.youtubeReducer
   };
 }
 
