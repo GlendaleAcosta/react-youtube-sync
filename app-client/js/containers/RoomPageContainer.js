@@ -5,6 +5,7 @@ import { openModal } from 'actions/modalActions';
 import { initiateSocket } from 'actions/roomActions';
 import YouTube from 'react-youtube';
 import PlayerControls from 'components/RoomPage/PlayerControls';
+import QueueSidebar from 'components/RoomPage/QueueSidebar';
 
 class RoomPageContainer extends React.Component {
   constructor(props) {
@@ -67,38 +68,48 @@ class RoomPageContainer extends React.Component {
     const { playerState } = this.state;
     return (
       <div className="full-page row m-0">
-        <div className="col-md-2 queue-bg">
-          <div onClick={this.addVideo} className="big-ass-add-btn">
+        <QueueSidebar {...this.props} />
+        <div className="col-md-7 overflow-scroll">
+            <div className="card mt-2 mb-2">
+              <div className="card-body">
+                <h5 className="card-title">Special title treatment</h5>
+                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              </div>
+              <div className="card-footer text-muted">
+                2 days ago
+              </div>
+            </div>
 
+            <YouTube
+              id="youtube-iframe"
+              containerClassName="youtube-container"
+              videoId={currentVideo}
+              onReady={this.onReady}
+              onPlay={this.onPlay}
+              onPause={this.onPause}
+              onStateChange={this.onStateChange}
+              opts={{
+                width: '100%',
+                playerVars: {
+                  controls: 0, // player controls are disabled
+                  disablekb: 1, // keyboard controls are disabled
+                  rel: 0,
+                }
+              }}
+            />
+            <PlayerControls
+              {...this.props}
+              clientPlay={this.clientPlay}
+              clientPause={this.clientPause}
+              playerState={playerState}
+            />
+            <div className="test-box"></div>
+            <div className="test-box"></div>
+            <div className="test-box"></div>
           </div>
-        </div>
-        <div className="col-md-7 d-flex justify-content-center align-items-center flex-column">
-          <YouTube
-            id="youtube-iframe"
-            containerClassName="youtube-container"
-            videoId={currentVideo}
-            onReady={this.onReady}
-            onPlay={this.onPlay}
-            onPause={this.onPause}
-            onStateChange={this.onStateChange}
-            opts={{
-              width: '100%',
-              playerVars: {
-                controls: 0, // player controls are disabled
-                disablekb: 1, // keyboard controls are disabled
-                rel: 0,
-              }
-            }}
-          />
-        <PlayerControls
-          {...this.props}
-          clientPlay={this.clientPlay}
-          clientPause={this.clientPause}
-          playerState={playerState}
-        />
-        </div>
+
         <div className="col-md-3 chat-bg">
-          Chat
+          
         </div>
 
       </div>
