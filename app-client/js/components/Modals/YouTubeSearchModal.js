@@ -1,5 +1,7 @@
 import React from 'react'
-import { searchVideo } from 'actions/YouTubeActions';
+import { searchVideo, fetchCurrentVideo } from 'actions/YouTubeActions';
+import { closeModal } from 'actions/modalActions';
+
 
 class YouTubeSearchModal extends React.Component {
   constructor(props) {
@@ -18,12 +20,19 @@ class YouTubeSearchModal extends React.Component {
     this.props.dispatch(searchVideo(this.state.search));
   }
 
+  setVideo = (videoId) => {
+    const {socket} = this.props.roomReducer;
+    this.props.dispatch(fetchCurrentVideo(videoId));
+    this.props.dispatch(closeModal());
+    socket.emit('current_video', videoId);
+  }
+
   renderVideos = () => {
     const { videos } = this.props.youtubeReducer;
     console.log(videos);
     return videos.map((video) =>
       (
-        <div className="row p-2 video-search-card">
+        <div onClick={() => this.setVideo(video.id.videoId)} className="row p-2 video-search-card">
           <div className="col-md-4">
             <img alt={video.snippet.title} src={video.snippet.thumbnails.medium.url} />
           </div>

@@ -4,11 +4,11 @@
 }
 
 .chat-bg {
-  background-color: lightblue;
+  background-color: #f8f9fa;
 }
 
 .queue-bg {
-  background-color: lightblue;
+  background-color: #f8f9fa;
 }
 
 .big-ass-add-btn {
@@ -53,5 +53,46 @@
   background-color: #fafafa;
   &:hover {
     background-color: #e7ecef;
+  }
+}
+
+// YouTube
+.youtube-container {
+  width: 100%;
+  height: calc(((100vw * 7 ) / 12) * 9 / 16);
+}
+
+#youtube-iframe {
+  width: 100%;
+  height: 100%;
+}
+
+// player controls
+.player-control {
+  background-color: #000;
+  width: 100%;
+  // height: 2.5rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: .3rem;
+  background-color: #232323;
+}
+
+.play-btn {
+  cursor: pointer;
+  width: 2.3rem;
+  height: 1.7rem;
+  margin: .3rem;
+  border-radius: .4rem;
+
+  i {
+    color: #fff;
+    font-size: 2rem;
+
+    &:hover {
+      color: red;
+    }
   }
 }

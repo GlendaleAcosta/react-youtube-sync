@@ -32,24 +32,23 @@ app.get('/*', (req, res) => {
 io.on('connection', function(socket){
   const roomId = socket.handshake.query.roomId;
   socket.join(roomId);
+  console.log(`${socket.id} joined room ${roomId}`);
 
-  // socket.on('chat message', function(chatLine){
-  //   io.to(roomId).emit('chat', chatLine);
-  // });
+  socket.on('chat message', function(chatLine){
+    io.to(roomId).emit('chat', chatLine);
+  });
 
   socket.on('youtube_onPlay', function(time){
-    io.to(roomId).emit('youtube_playVideo', time)
-    console.log('youtube_onPlay' + time);
-  })
+    socket.to(roomId).emit('youtube_playVideo', time);
+  });
 
   socket.on('youtube_onPause', function(time){
-    io.to(roomId).emit('youtube_pauseVideo', time)
-    console.log('youtube_onPause' + time);
-  })
+    socket.to(roomId).emit('youtube_pauseVideo', time)
+  });
 
   socket.on('current_video', function(videoId){
-    io.to(roomId).emit('current_video', videoId)
-  })
+    socket.to(roomId).emit('current_video', videoId)
+  });
 
   socket.on('disconnect', function(){
     socket.leave(roomId);

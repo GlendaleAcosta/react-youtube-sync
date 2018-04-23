@@ -28,7 +28,8 @@ class ModalContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     modalReducer: state.modalReducer,
-    youtubeReducer: state.youtubeReducer
+    youtubeReducer: state.youtubeReducer,
+    roomReducer: state.roomReducer
   };
 }
 

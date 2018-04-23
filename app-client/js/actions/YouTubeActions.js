@@ -14,6 +14,13 @@ function videosFetched(videos) {
   };
 }
 
+export function fetchCurrentVideo(videoId) {
+  return {
+    type: 'FETCH_CURRENT_VIDEO',
+    payload: videoId,
+  };
+}
+
 export function searchVideo(q) {
   return function (dispatch) {
     dispatch(fetchVideos());

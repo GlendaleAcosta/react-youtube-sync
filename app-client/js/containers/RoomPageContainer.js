@@ -1,90 +1,61 @@
 import React from 'react'
-import YouTube from 'react-youtube';
 import io from 'socket.io-client'
 import { connect } from 'react-redux';
 import { openModal } from 'actions/modalActions';
+import { initiateSocket } from 'actions/roomActions';
+import YouTube from 'react-youtube';
+import PlayerControls from 'components/RoomPage/PlayerControls';
 
 class RoomPageContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      socket: io('/', {query: {roomId: props.match.params.roomId}}),
-      pausedFromServer: false,
-      playedFromServer: false
-    };
+      yt: null,
+      playerState: -1,
+    }
+    props.dispatch(initiateSocket(
+      io('/', {query: {roomId: props.match.params.roomId}}),
+    ));
   }
 
   onReady = (video) => {
-    var {socket} = this.state;
-    const that = this;
-
+    this.setState({ yt: video });
+    const { socket } = this.props.roomReducer;
     socket.on('youtube_playVideo', function(playTime){
-      that.setState({
-        playedFromServer: true
-      });
-      var currentTime = video.target.getCurrentTime();
-
-      if (currentTime - playTime > 0.15 || playTime - currentTime < -0.15 ){
-        video.target.seekTo(playTime, true);
-        video.target.playVideo();
-        setTimeout(() => {
-          that.setState({
-            playedFromServer: false
-          });
-        }, 1000);
-
-      } else {
-        video.target.playVideo();
-        setTimeout(() => {
-          that.setState({
-            playedFromServer: false
-          });
-        }, 1000);
-      }
+      video.target.playVideo();
     });
-
     socket.on('youtube_pauseVideo', function(pauseTime){
-      that.setState({
-        pausedFromServer: true
-      });
-      var currentTime = video.target.getCurrentTime();
-      if (currentTime - pauseTime > 0.15 || pauseTime - currentTime < -0.15){
-        video.target.seekTo(pauseTime, true);
-        video.target.pauseVideo();
-        setTimeout(() => {
-          that.setState({
-            pausedFromServer: false
-          });
-        }, 1000);
-      } else {
-        video.target.pauseVideo();
-        setTimeout(() => {
-          that.setState({
-            pausedFromServer: false
-          });
-        }, 1000);
-      }
+      video.target.pauseVideo();
     });
-  };
-
-
-
-  onPlay = (video) => {
-    var {socket} = this.state;
-    var time = video.target.getCurrentTime();
-    if (!this.state.playedFromServer) {
-      console.log('I PLAYED IT');
-      socket.emit('youtube_onPlay', time);
-    }
   }
 
-  onPause = (video) => {
-    var {socket} = this.state;
-    var time = video.target.getCurrentTime();
-    if (!this.state.pausedFromServer) {
-      console.log('I PAUSED IT');
-      socket.emit('youtube_onPause', time);
-    }
+  clientPlay = () => {
+    const { yt } = this.state;
+    const { socket } = this.props.roomReducer;
+    yt.target.playVideo();
+    socket.emit('youtube_onPlay', yt.target.getCurrentTime());
+  }
+
+  clientPause = () => {
+    const { yt } = this.state;
+    const { socket } = this.props.roomReducer;
+    yt.target.pauseVideo();
+    socket.emit('youtube_onPause', yt.target.getCurrentTime());
+  }
+
+  onPlay = () => {
+    console.log('now playing')
+  }
+
+  onPause = () => {
+    console.log('now paused')
+  }
+
+  onStateChange = (video) => {
+    console.log(`state changed: ${video.target.getPlayerState()}`);
+    this.setState({
+      playerState: video.target.getPlayerState()
+    })
   }
 
   addVideo = () => {
@@ -92,6 +63,8 @@ class RoomPageContainer extends React.Component {
   }
 
   render () {
+    const { currentVideo } = this.props.youtubeReducer;
+    const { playerState } = this.state;
     return (
       <div className="full-page row m-0">
         <div className="col-md-2 queue-bg">
@@ -99,13 +72,30 @@ class RoomPageContainer extends React.Component {
 
           </div>
         </div>
-        <div className="col-md-7 d-flex justify-content-center align-items-center">
+        <div className="col-md-7 d-flex justify-content-center align-items-center flex-column">
           <YouTube
-            videoId="QtVL76gh09U"
+            id="youtube-iframe"
+            containerClassName="youtube-container"
+            videoId={currentVideo}
+            onReady={this.onReady}
             onPlay={this.onPlay}
             onPause={this.onPause}
-            onReady={this.onReady}
+            onStateChange={this.onStateChange}
+            opts={{
+              width: '100%',
+              playerVars: {
+                controls: 0, // player controls are disabled
+                disablekb: 1, // keyboard controls are disabled
+                rel: 0,
+              }
+            }}
           />
+        <PlayerControls
+          {...this.props}
+          clientPlay={this.clientPlay}
+          clientPause={this.clientPause}
+          playerState={playerState}
+        />
         </div>
         <div className="col-md-3 chat-bg">
           Chat
@@ -119,6 +109,8 @@ class RoomPageContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     userReducer: state.userReducer,
+    youtubeReducer: state.youtubeReducer,
+    roomReducer: state.roomReducer
   };
 }
 
