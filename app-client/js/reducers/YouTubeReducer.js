@@ -25,6 +25,12 @@ export default function reducer(state = {
         currentVideo: action.payload
       }
     }
+    case 'CHANGE_CURRENT_VIDEO': {
+      return {
+        ...state,
+        currentVideo: action.payload
+      }
+    }
     default: return state;
   }
 }

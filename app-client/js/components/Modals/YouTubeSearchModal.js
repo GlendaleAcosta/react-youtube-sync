@@ -24,7 +24,7 @@ class YouTubeSearchModal extends React.Component {
     const {socket} = this.props.roomReducer;
     this.props.dispatch(fetchCurrentVideo(videoId));
     this.props.dispatch(closeModal());
-    socket.emit('current_video', videoId);
+    socket.emit('youtube_currentVideo', videoId);
   }
 
   renderVideos = () => {
@@ -32,7 +32,7 @@ class YouTubeSearchModal extends React.Component {
     console.log(videos);
     return videos.map((video) =>
       (
-        <div onClick={() => this.setVideo(video.id.videoId)} className="row p-2 video-search-card">
+        <div className="row p-2 video-search-card">
           <div className="col-md-4">
             <img alt={video.snippet.title} src={video.snippet.thumbnails.medium.url} />
           </div>
@@ -40,6 +40,19 @@ class YouTubeSearchModal extends React.Component {
             <p className="font-weight-bold">{video.snippet.title}</p>
             <p className="text-secondary font-weight-light">{video.snippet.channelTitle}</p>
             <p className="text-secondary font-weight-light">{video.snippet.description}</p>
+          </div>
+          <div className="col-md-12 d-flex justify-content-end mt-3">
+            <button
+              className="btn btn-primary mr-2"
+            >
+              Add to Queue
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => this.setVideo(video.id.videoId)}
+            >
+              Play now
+            </button>
           </div>
         </div>
       )
@@ -49,44 +62,48 @@ class YouTubeSearchModal extends React.Component {
   render () {
 
     return(
-      <div className="container mt-3">
-        <div className="row">
+      <div className="container m-3 modal-card overflow-scroll">
+        <div className="row oveflow-scroll">
+          <div className="col-md-12 card">
+            <div className="card-body">
 
-          <div className="col-md-10 modal-card">
-            <div className="card">
-              <div class="card-body">
 
-                <form onSubmit={this.searchYouTubeVideo} className="form-inline my-2 my-lg-0">
-                  <input
-                    onChange={this.handleChange}
-                    value={this.state.q}
-                    name="search"
-                    className="form-control mr-sm-2 col-md-5"
-                    type="search"
-                    placeholder="Search youtube videos"
-                  />
-                  <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+              <form onSubmit={this.searchYouTubeVideo} className="form-inline my-2 my-lg-0">
+                <input
+                  onChange={this.handleChange}
+                  value={this.state.q}
+                  name="search"
+                  className="form-control mr-sm-2 col-md-5"
+                  type="search"
+                  placeholder="Search youtube videos"
+                />
+                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
 
-                <div className="row">
-                  <div className="col-md-12 pt-3">
-                    <p>Showing Results for "Cute Samoyeds"</p>
-                  </div>
-
-                  <div className="col-md-12">
-                    {this.renderVideos()}
-                  </div>
-
+              <div className="row">
+                <div className="col-md-12 pt-3">
+                  <p>Showing Results for "Cute Samoyeds"</p>
                 </div>
 
+                <div className="col-md-12">
+                  {this.renderVideos()}
+                </div>
               </div>
+
+
             </div>
           </div>
-
         </div>
       </div>
     )
   }
 }
+
+
+
+
+
+
+
 
 export default YouTubeSearchModal;

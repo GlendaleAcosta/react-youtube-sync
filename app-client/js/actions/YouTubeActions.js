@@ -21,6 +21,13 @@ export function fetchCurrentVideo(videoId) {
   };
 }
 
+export function changeCurrentVideo(videoId) {
+  return {
+    type: 'CHANGE_CURRENT_VIDEO',
+    payload: videoId,
+  };
+}
+
 export function searchVideo(q) {
   return function (dispatch) {
     dispatch(fetchVideos());

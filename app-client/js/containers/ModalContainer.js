@@ -16,9 +16,9 @@ class ModalContainer extends React.Component {
   render () {
     const { modal } = this.props.modalReducer;
     return (
-      <div className="modal-container d-flex justify-content-center">
+      <div className="modal-container d-flex justify-content-center overflow-hidden">
         { (modal === 'YouTubeSearchModal') ? <YouTubeSearchModal {...this.props} /> : null }
-
+        
         <div onClick={this.closeModal} className="modal-dark-bg" />
       </div>
     )

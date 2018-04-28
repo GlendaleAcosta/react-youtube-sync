@@ -46,7 +46,7 @@ io.on('connection', function(socket){
     socket.to(roomId).emit('youtube_pauseVideo', time)
   });
 
-  socket.on('current_video', function(videoId){
+  socket.on('youtube_currentVideo', function(videoId){
     socket.to(roomId).emit('current_video', videoId)
   });
 

@@ -1,3 +1,5 @@
+@import './components/youtubeModal';
+
 .full-page {
   height: calc(100vh - 56px);
   width: 100vw;
@@ -77,15 +79,9 @@
 .modal-card {
   position: absolute;
   z-index: 2;
+  max-height: calc(100vh - 2rem);
 }
 
-.video-search-card {
-  cursor: pointer;
-  background-color: #fafafa;
-  &:hover {
-    background-color: #e7ecef;
-  }
-}
 
 // YouTube
 .youtube-container {
@@ -142,4 +138,8 @@
 
 .overflow-scroll {
   overflow: scroll;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }

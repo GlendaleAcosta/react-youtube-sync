@@ -3,6 +3,7 @@ import io from 'socket.io-client'
 import { connect } from 'react-redux';
 import { openModal } from 'actions/modalActions';
 import { initiateSocket } from 'actions/roomActions';
+import { changeCurrentVideo } from 'actions/YouTubeActions';
 import YouTube from 'react-youtube';
 import PlayerControls from 'components/RoomPage/PlayerControls';
 import QueueSidebar from 'components/RoomPage/QueueSidebar';
@@ -20,13 +21,18 @@ class RoomPageContainer extends React.Component {
   }
 
   onReady = (video) => {
+    const that = this;
     this.setState({ yt: video });
     const { socket } = this.props.roomReducer;
+
     socket.on('youtube_playVideo', function(playTime){
       video.target.playVideo();
     });
     socket.on('youtube_pauseVideo', function(pauseTime){
       video.target.pauseVideo();
+    });
+    socket.on('current_video', function(videoId){
+      that.props.dispatch(changeCurrentVideo(videoId))
     });
   }
 
@@ -109,7 +115,7 @@ class RoomPageContainer extends React.Component {
           </div>
 
         <div className="col-md-3 chat-bg">
-          
+
         </div>
 
       </div>
