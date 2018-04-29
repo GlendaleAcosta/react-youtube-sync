@@ -7,6 +7,7 @@ import { changeCurrentVideo } from 'actions/YouTubeActions';
 import YouTube from 'react-youtube';
 import PlayerControls from 'components/RoomPage/PlayerControls';
 import QueueSidebar from 'components/RoomPage/QueueSidebar';
+import VideoDetails from 'components/RoomPage/VideoDetails';
 
 class RoomPageContainer extends React.Component {
   constructor(props) {
@@ -31,8 +32,8 @@ class RoomPageContainer extends React.Component {
     socket.on('youtube_pauseVideo', function(pauseTime){
       video.target.pauseVideo();
     });
-    socket.on('current_video', function(videoId){
-      that.props.dispatch(changeCurrentVideo(videoId))
+    socket.on('current_video', function(video){
+      that.props.dispatch(changeCurrentVideo(video))
     });
   }
 
@@ -78,18 +79,18 @@ class RoomPageContainer extends React.Component {
         <div className="col-md-7 overflow-scroll">
             <div className="card mt-2 mb-2">
               <div className="card-body">
-                <h5 className="card-title">Special title treatment</h5>
-                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <h5 className="card-title">Watching anime videos only!</h5>
+                <p className="card-text">Host: Guest#32310</p>
               </div>
               <div className="card-footer text-muted">
-                2 days ago
+                Share this url with your friends {`http://localhost:3000/room/${this.props.match.params.roomId}`}
               </div>
             </div>
 
             <YouTube
               id="youtube-iframe"
               containerClassName="youtube-container"
-              videoId={currentVideo}
+              videoId={currentVideo.id}
               onReady={this.onReady}
               onPlay={this.onPlay}
               onPause={this.onPause}
@@ -109,9 +110,7 @@ class RoomPageContainer extends React.Component {
               clientPause={this.clientPause}
               playerState={playerState}
             />
-            <div className="test-box"></div>
-            <div className="test-box"></div>
-            <div className="test-box"></div>
+            <VideoDetails {...this.props} />
           </div>
 
         <div className="col-md-3 chat-bg">

@@ -57,13 +57,13 @@ class App extends React.Component {
     return (initialUserResourcesFetched)
       ? (
         <div>
-            <NavbarContainer />
-            <Route exact path="/" component={HomeContainer} />
-            <Route exact path="/sign-up" render={this.renderRegistrationPage} />
-            <Route exact path="/login" render={this.renderRegistrationPage} />
-            <Route exact path="/profile/:id" render={this.renderProfilePage} />
-            <Route exact path="/room/:roomId" component={RoomPageContainer} />
-            { modal ? <ModalContainer /> : null }
+          <NavbarContainer />
+          <Route exact path="/" component={HomeContainer} />
+          <Route exact path="/sign-up" render={this.renderRegistrationPage} />
+          <Route exact path="/login" render={this.renderRegistrationPage} />
+          <Route exact path="/profile/:id" render={this.renderProfilePage} />
+          <Route exact path="/room/:roomId" component={RoomPageContainer} />
+          { modal ? <ModalContainer /> : null }
         </div>
       )
       : null
@@ -73,7 +73,8 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     userReducer: state.userReducer,
-    modalReducer: state.modalReducer
+    modalReducer: state.modalReducer,
+    roomReducer: state.roomReducer
   };
 }
 

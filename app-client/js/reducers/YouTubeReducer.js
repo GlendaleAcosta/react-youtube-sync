@@ -2,7 +2,13 @@ export default function reducer(state = {
   videos: [],
   fetchingVideos: false,
   fetchingCurrentVideo: false,
-  currentVideo: 'QhBnZ6NPOY0',
+  currentVideo: {
+    id: 'QhBnZ6NPOY0',
+    snippet: {
+      description: 'sasuke is attempting to destroy the hidden leaf village but naruto refuses to let that happen! (instagram: @kingvader) follow me for more videos! WHAT TEAM ARE YOU! TEAM NARUTO OR SASUKE!?...',
+      title: '"HOOD NARUTO" pt.3 (full video) naruto vs sasuke'
+    }
+  },
 }, action) {
   switch (action.type) {
     case 'FETCH_VIDEOS': {

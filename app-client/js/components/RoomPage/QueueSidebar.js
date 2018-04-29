@@ -1,5 +1,6 @@
 import React from 'react'
 import { openModal } from 'actions/modalActions';
+import QueueVid from 'components/RoomPage/QueueVid';
 
 class QueueSidebar extends React.Component {
   constructor(props) {
@@ -19,21 +20,20 @@ class QueueSidebar extends React.Component {
         </div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <a className="nav-link active">Queue</a>
+            <a className="nav-link active">History</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link">History</a>
+            <a className="nav-link">Queue</a>
           </li>
         </ul>
         <div className="queue-videos">
-          <div className="queue-vid"></div>
-          <div className="queue-vid"></div>
-          <div className="queue-vid"></div>
-          <div className="queue-vid"></div>
-          <div className="queue-vid"></div>
-          <div className="queue-vid"></div>
-          <div className="queue-vid"></div>
-          <div className="queue-vid"></div>
+          <QueueVid {...this.props} />
+          <QueueVid {...this.props} />
+          <QueueVid {...this.props} />
+          <QueueVid {...this.props} />
+          <QueueVid {...this.props} />
+          <QueueVid {...this.props} />
+          <QueueVid {...this.props} />
         </div>
       </div>
     )

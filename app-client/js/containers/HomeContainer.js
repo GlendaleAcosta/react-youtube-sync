@@ -15,7 +15,6 @@ class HomeContainer extends React.Component {
 
   render () {
     const { redirectToRoom, roomId } = this.props.roomReducer;
-    console.log('we are here');
     if (redirectToRoom) {
       this.props.history.push(`room/${roomId}`);
     }

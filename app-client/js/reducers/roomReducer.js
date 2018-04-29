@@ -1,7 +1,9 @@
 export default function reducer(state = {
   socket: null,
   redirectToRoom: false,
-  roomId: null
+  roomId: null,
+  fetchingRoom: false,
+  roomExists: false
 }, action) {
   switch (action.type) {
     case 'SET_SOCKET': {

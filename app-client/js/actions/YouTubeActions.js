@@ -14,10 +14,10 @@ function videosFetched(videos) {
   };
 }
 
-export function fetchCurrentVideo(videoId) {
+export function fetchCurrentVideo(video) {
   return {
     type: 'FETCH_CURRENT_VIDEO',
-    payload: videoId,
+    payload: video,
   };
 }
 

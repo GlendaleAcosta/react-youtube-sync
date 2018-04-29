@@ -20,11 +20,15 @@ class YouTubeSearchModal extends React.Component {
     this.props.dispatch(searchVideo(this.state.search));
   }
 
-  setVideo = (videoId) => {
+  setVideo = (video) => {
     const {socket} = this.props.roomReducer;
-    this.props.dispatch(fetchCurrentVideo(videoId));
+    const newVideo = {
+      id: video.id.videoId,
+      snippet: video.snippet
+    };
+    this.props.dispatch(fetchCurrentVideo(newVideo));
     this.props.dispatch(closeModal());
-    socket.emit('youtube_currentVideo', videoId);
+    socket.emit('youtube_currentVideo', newVideo);
   }
 
   renderVideos = () => {
@@ -49,7 +53,7 @@ class YouTubeSearchModal extends React.Component {
             </button>
             <button
               className="btn btn-primary"
-              onClick={() => this.setVideo(video.id.videoId)}
+              onClick={() => this.setVideo(video)}
             >
               Play now
             </button>
