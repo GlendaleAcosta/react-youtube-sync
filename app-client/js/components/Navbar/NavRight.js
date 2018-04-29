@@ -15,11 +15,12 @@ class NavRight extends React.Component {
 
   renderNav = () => {
     const { user } = this.props.userReducer;
+    console.log(user);
     if (user)
       return (
         <ul className="navbar-nav dropdown">
           <li className="nav-item">
-            <Link className="nav-link dropdown-toggle" to="/profile">gglendale17@gmail.com</Link>
+            <Link className="nav-link dropdown-toggle" to="/profile">{user.email}</Link>
           </li>
           <div className="dropdown-menu show">
             <Link className="dropdown-item" to={`/profile/${user.id}`}>View Profile</Link>

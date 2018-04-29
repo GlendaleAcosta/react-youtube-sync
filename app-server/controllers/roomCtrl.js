@@ -4,11 +4,15 @@ const Room = require('../models/Room')(sequelize, DataTypes);
 const shortid = require('shortid');
 
 exports.postRoom = (req, res) => {
-
+  console.log(req.body);
   if (!req.body.roomId) {
   const id = shortid.generate();
     Room
-      .upsert({id})
+      .upsert({
+        id,
+        title: req.body.roomTitle,
+        host: req.body.username
+      })
       .then((created) => {
         if (created) {
           return res.json({

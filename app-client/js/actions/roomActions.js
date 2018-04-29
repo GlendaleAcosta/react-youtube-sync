@@ -28,12 +28,15 @@ export function initiateSocket(socket) {
   };
 }
 
-export function createRoom() {
+export function createRoom(roomTitle, username) {
   return function (dispatch) {
     return axios({
       method: 'POST',
       url: '/room',
-      data: null,
+      data: {
+        roomTitle,
+        username
+      }
     })
     .then((response) => {
       console.log(response);

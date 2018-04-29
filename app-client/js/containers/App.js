@@ -7,11 +7,14 @@ import { login, initalUserFetched } from 'actions/userActions';
 import { connect } from 'react-redux';
 import ModalContainer from 'containers/ModalContainer';
 import HomeContainer from 'containers/HomeContainer';
+import shortid from 'shortid';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    if (!localStorage.getItem('GuestName'))
+      localStorage.setItem('GuestName', `Guest#${shortid.generate()}`)
   }
 
   componentDidMount() {

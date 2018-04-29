@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createRoom } from 'actions/roomActions';
+// import { createRoom } from 'actions/roomActions';
+import { openModal } from 'actions/modalActions';
 
 class HomeContainer extends React.Component {
   constructor(props) {
@@ -9,8 +10,8 @@ class HomeContainer extends React.Component {
   }
 
   createRoom = () => {
-    this.props.dispatch(createRoom());
-
+    // this.props.dispatch(createRoom());
+    this.props.dispatch(openModal('CreateRoomModal'))
   }
 
   render () {
