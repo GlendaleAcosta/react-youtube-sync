@@ -6,6 +6,7 @@ import RoomPageContainer from './RoomPageContainer';
 import { login, initalUserFetched } from 'actions/userActions';
 import { connect } from 'react-redux';
 import ModalContainer from 'containers/ModalContainer';
+import HomeContainer from 'containers/HomeContainer';
 
 class App extends React.Component {
   constructor(props) {
@@ -57,6 +58,7 @@ class App extends React.Component {
       ? (
         <div>
             <NavbarContainer />
+            <Route exact path="/" component={HomeContainer} />
             <Route exact path="/sign-up" render={this.renderRegistrationPage} />
             <Route exact path="/login" render={this.renderRegistrationPage} />
             <Route exact path="/profile/:id" render={this.renderProfilePage} />

@@ -20,8 +20,10 @@ app.use(express.static(path.join(__dirname, '../build')))
 
 // Controllers
 const userCtrl = require('./controllers/userCtrl');
+const roomCtrl = require('./controllers/roomCtrl');
 
 // Routes
+app.post('/room', roomCtrl.postRoom);
 app.post('/sign-up', userCtrl.postSignUp);
 app.post('/login', userCtrl.postLogin);
 app.get('/*', (req, res) => {
