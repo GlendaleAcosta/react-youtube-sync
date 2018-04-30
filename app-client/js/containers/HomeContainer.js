@@ -45,22 +45,24 @@ class HomeContainer extends React.Component {
       <div className="container pt-3">
         <div className="row">
 
-          <div className="card col-md-12 mb-3">
-            <div className="card-body d-flex flex-column">
-              <h1 className="card-title">Watch youtube with your friends!</h1>
-              <p className="card-title">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <button
-                className="btn btn-primary align-self-end"
-                onClick={this.createRoom}
-              >
-                Create Room
-              </button>
+          <div className="col-md-12 mb-3">
+            <div className="card">
+              <div className="card-body d-flex flex-column">
+                <h1 className="card-title">Watch youtube with your friends!</h1>
+                <p className="card-title">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <button
+                  className="btn btn-primary align-self-end"
+                  onClick={this.createRoom}
+                >
+                  Create Room
+                </button>
+              </div>
             </div>
           </div>
 
-          <h2 className="col-md-12">Rooms: </h2>
+          <h2 className="col-md-12 mt-3">Rooms: </h2>
           {fetchingRooms ? null: this.renderCards()}
 
         </div>

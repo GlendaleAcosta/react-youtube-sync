@@ -72,6 +72,7 @@ export default function reducer(state = {
         roomExists: false,
         fetchingRooms: true,
         currentRoom: null,
+        socket: null
       }
     }
     default: return state;

@@ -35,8 +35,10 @@ app.get('/*', (req, res) => {
 // Socket.io
 io.on('connection', function(socket){
   const roomId = socket.handshake.query.roomId;
-  socket.join(roomId);
-  console.log(`${socket.id} joined room ${roomId}`);
+  socket.join(roomId, () => {
+    console.log(`${socket.id} joined room ${roomId}`);
+  });
+
 
   socket.on('chat message', function(chatLine){
     io.to(roomId).emit('chat', chatLine);
@@ -55,6 +57,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('disconnect', function(){
+    console.log(`${socket.id} left room ${roomId}`);
     socket.leave(roomId);
   });
 });

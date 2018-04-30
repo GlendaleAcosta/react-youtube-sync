@@ -26,6 +26,7 @@ class RoomPageContainer extends React.Component {
   onReady = (video) => {
     const that = this;
     this.setState({ yt: video });
+    console.log(video);
     const { socket } = this.props.roomReducer;
 
     socket.on('youtube_playVideo', function(playTime){
