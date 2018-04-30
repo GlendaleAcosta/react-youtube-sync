@@ -3,7 +3,9 @@ export default function reducer(state = {
   redirectToRoom: false,
   roomId: null,
   fetchingRoom: false,
-  roomExists: false
+  roomExists: false,
+  fetchingRooms: true,
+  rooms: []
 }, action) {
   switch (action.type) {
     case 'SET_SOCKET': {
@@ -24,6 +26,20 @@ export default function reducer(state = {
         ...state,
         roomId: null,
         redirectToRoom: false
+      }
+    }
+    case 'FETCHING_ROOMS': {
+      return {
+        ...state,
+        fetchingRooms: true
+      }
+    }
+    case 'ROOMS_FETCHED': {
+      console.log(action.payload);
+      return {
+        ...state,
+        fetchingRooms: false,
+        rooms: action.payload
       }
     }
     default: return state;

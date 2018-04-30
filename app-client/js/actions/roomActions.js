@@ -21,6 +21,20 @@ function goToNewlyCreatedRoom(roomId) {
   }
 }
 
+function fetchingRooms() {
+  return {
+    type: 'FETCHING_ROOMS',
+    payload: null
+  }
+}
+
+function roomsFetched(rooms) {
+  return {
+    type: 'ROOMS_FETCHED',
+    payload: rooms,
+  }
+}
+
 export function initiateSocket(socket) {
   return {
     type: 'SET_SOCKET',
@@ -48,4 +62,22 @@ export function createRoom(roomTitle, username) {
       // dispatch(errorFetchingUser(error));
     });
   };
+}
+
+export function fetchRooms() {
+  return function (dispatch) {
+    // dispatch(fetchingRooms());
+    return axios({
+      method: 'POST',
+      url: 'api/room-list',
+      data: null
+    })
+    .then((response) => {
+      console.log(response);
+      dispatch(roomsFetched(response.data.rooms));
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
 }

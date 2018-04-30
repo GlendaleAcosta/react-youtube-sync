@@ -7,7 +7,6 @@ class VideoDetails extends React.Component {
   }
   render () {
     const { currentVideo } = this.props.youtubeReducer;
-    console.log(currentVideo);
     return (
       <div className="card mb-3">
         <div className="card-body">

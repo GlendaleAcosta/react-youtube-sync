@@ -60,7 +60,6 @@ class RoomPageContainer extends React.Component {
   }
 
   onStateChange = (video) => {
-    console.log(`state changed: ${video.target.getPlayerState()}`);
     this.setState({
       playerState: video.target.getPlayerState()
     })

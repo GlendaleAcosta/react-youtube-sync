@@ -21,8 +21,10 @@ app.use(express.static(path.join(__dirname, '../build')))
 // Controllers
 const userCtrl = require('./controllers/userCtrl');
 const roomCtrl = require('./controllers/roomCtrl');
+const roomListCtrl = require('./controllers/roomListCtrl');
 
 // Routes
+app.post('/api/room-list', roomListCtrl.postRoomList);
 app.post('/room', roomCtrl.postRoom);
 app.post('/sign-up', userCtrl.postSignUp);
 app.post('/login', userCtrl.postLogin);

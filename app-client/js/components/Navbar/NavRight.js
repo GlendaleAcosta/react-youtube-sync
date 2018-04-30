@@ -15,7 +15,6 @@ class NavRight extends React.Component {
 
   renderNav = () => {
     const { user } = this.props.userReducer;
-    console.log(user);
     if (user)
       return (
         <ul className="navbar-nav dropdown">
