@@ -81,3 +81,52 @@ export function fetchRooms() {
     })
   }
 }
+
+function validatingRoomPage() {
+  return {
+    type: 'VALIDATING_ROOM',
+    payload: null
+  }
+}
+
+function roomValidated(room) {
+  return {
+    type: 'ROOM_PAGE_VALIDATED',
+    payload: room
+  }
+}
+
+function roomInvalid() {
+  return {
+    type: 'ROOM_INVALID',
+    payload: null
+  }
+}
+
+export function validateRoomPage(roomId) {
+  return function(dispatch) {
+    dispatch(validatingRoomPage());
+    return axios({
+      method: 'POST',
+      url: '/room',
+      data: { roomId }
+    })
+    .then((response) => {
+      if (response.data.room)
+        dispatch(roomValidated(response.data.room))
+      else
+        dispatch(roomInvalid())
+    })
+    .catch((error) => {
+      console.log(error);
+      // dispatch(errorFetchingUser(error));
+    });
+  }
+}
+
+export function resetRoomState() {
+  return {
+    type: 'RESET_ROOM_STATE',
+    payload: null
+  }
+}

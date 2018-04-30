@@ -2,12 +2,13 @@ import React from 'react'
 import io from 'socket.io-client'
 import { connect } from 'react-redux';
 import { openModal } from 'actions/modalActions';
-import { initiateSocket } from 'actions/roomActions';
+import { initiateSocket, validateRoomPage, resetRoomState } from 'actions/roomActions';
 import { changeCurrentVideo } from 'actions/YouTubeActions';
 import YouTube from 'react-youtube';
 import PlayerControls from 'components/RoomPage/PlayerControls';
 import QueueSidebar from 'components/RoomPage/QueueSidebar';
 import VideoDetails from 'components/RoomPage/VideoDetails';
+import { Redirect } from 'react-router-dom';
 
 class RoomPageContainer extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class RoomPageContainer extends React.Component {
       yt: null,
       playerState: -1,
     }
+    props.dispatch(validateRoomPage(props.match.params.roomId));
     props.dispatch(initiateSocket(
       io('/', {query: {roomId: props.match.params.roomId}}),
     ));
@@ -69,9 +71,21 @@ class RoomPageContainer extends React.Component {
     this.props.dispatch(openModal('YouTubeSearchModal'));
   }
 
+  componentWillUnmount() {
+    console.log('unmounted');
+    this.props.dispatch(resetRoomState());
+  }
+
   render () {
     const { currentVideo } = this.props.youtubeReducer;
+    const { validatingRoomPage, roomExists } = this.props.roomReducer;
     const { playerState } = this.state;
+    if (validatingRoomPage) {
+      return null;
+    } else if (!validatingRoomPage && !roomExists) {
+      return <Redirect to='/' />
+    }
+
     return (
       <div className="full-page row m-0">
         <QueueSidebar {...this.props} />

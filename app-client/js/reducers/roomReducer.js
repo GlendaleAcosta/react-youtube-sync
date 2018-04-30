@@ -2,10 +2,11 @@ export default function reducer(state = {
   socket: null,
   redirectToRoom: false,
   roomId: null,
-  fetchingRoom: false,
+  validatingRoomPage: true,
   roomExists: false,
   fetchingRooms: true,
-  rooms: []
+  rooms: [],
+  currentRoom: null,
 }, action) {
   switch (action.type) {
     case 'SET_SOCKET': {
@@ -35,11 +36,41 @@ export default function reducer(state = {
       }
     }
     case 'ROOMS_FETCHED': {
-      console.log(action.payload);
       return {
         ...state,
         fetchingRooms: false,
         rooms: action.payload
+      }
+    }
+    case 'VALIDATING_ROOM': {
+      return {
+        ...state,
+        validatingRoomPage: true
+      }
+    }
+    case 'ROOM_PAGE_VALIDATED': {
+      return {
+        ...state,
+        validatingRoomPage: false,
+        roomExists: true
+      }
+    }
+    case 'ROOM_INVALID': {
+      return {
+        ...state,
+        validatingRoomPage: false,
+        roomExists: false
+      }
+    }
+    case 'RESET_ROOM_STATE': {
+      return {
+        ...state,
+        redirectToRoom: false,
+        roomId: null,
+        validatingRoomPage: true,
+        roomExists: false,
+        fetchingRooms: true,
+        currentRoom: null,
       }
     }
     default: return state;

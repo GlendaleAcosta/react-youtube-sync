@@ -25,7 +25,17 @@ exports.postRoom = (req, res) => {
         }
       });
   } else if (req.body.roomId) {
-    console.log(`we are here. roomId: ${req.body.roomId}`);
+    Room.findOne({where: {id: req.body.roomId}})
+      .then((room, idk) => {
+        if (room) {
+          return res.json({ room });
+        } else {
+          return res.json({
+            error: 'invalid url'
+          })
+        }
+
+      })
     // Room.find({where: })
   }
 };
