@@ -72,28 +72,26 @@ class RoomPageContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unmounted');
     this.props.dispatch(resetRoomState());
   }
 
   render () {
     const { currentVideo } = this.props.youtubeReducer;
-    const { validatingRoomPage, roomExists } = this.props.roomReducer;
+    const { validatingRoomPage, roomExists, currentRoom } = this.props.roomReducer;
     const { playerState } = this.state;
     if (validatingRoomPage) {
       return null;
     } else if (!validatingRoomPage && !roomExists) {
       return <Redirect to='/' />
     }
-
     return (
       <div className="full-page row m-0">
         <QueueSidebar {...this.props} />
         <div className="col-md-7 overflow-scroll">
             <div className="card mt-2 mb-2">
               <div className="card-body">
-                <h5 className="card-title">Watching anime videos only!</h5>
-                <p className="card-text">Host: Guest#32310</p>
+                <h5 className="card-title">{currentRoom.title}</h5>
+                <p className="card-text">Host: {currentRoom.host}</p>
               </div>
               <div className="card-footer text-muted">
                 Share this url with your friends {`http://localhost:3000/room/${this.props.match.params.roomId}`}

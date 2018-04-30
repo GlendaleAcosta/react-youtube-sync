@@ -52,7 +52,8 @@ export default function reducer(state = {
       return {
         ...state,
         validatingRoomPage: false,
-        roomExists: true
+        roomExists: true,
+        currentRoom: action.payload
       }
     }
     case 'ROOM_INVALID': {
