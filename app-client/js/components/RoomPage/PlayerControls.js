@@ -5,7 +5,6 @@ class PlayerControls extends React.Component {
     super(props);
     this.state = {};
     this.progressBar = React.createRef();
-    console.log(this.progressBar);
   }
 
   renderPlayBtn = () => {

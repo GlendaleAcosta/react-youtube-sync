@@ -43,6 +43,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('chat message', function(chatLine){
+    console.log(chatLine);
     io.to(roomId).emit('chat', chatLine);
   });
 

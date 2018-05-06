@@ -10,6 +10,8 @@ import QueueSidebar from 'components/RoomPage/QueueSidebar';
 import VideoDetails from 'components/RoomPage/VideoDetails';
 import { Redirect } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import ChatSidebar from 'components/RoomPage/ChatSidebar';
+import { addMessageToChat } from 'actions/chatActions';
 
 class RoomPageContainer extends React.Component {
   constructor(props) {
@@ -33,6 +35,10 @@ class RoomPageContainer extends React.Component {
 
     this.setState({ yt: video });
     const { socket } = this.props.roomReducer;
+
+    socket.on('chat', function(chatLine) {
+      that.props.dispatch(addMessageToChat(chatLine));
+    });
 
     socket.on('youtube_playVideo', function(playTime){
       video.target.playVideo();
@@ -143,9 +149,8 @@ class RoomPageContainer extends React.Component {
             <VideoDetails {...this.props} />
           </div>
 
-        <div className="col-md-3 chat-bg">
+        <ChatSidebar {...this.props} />
 
-        </div>
 
       </div>
     ) : null;
@@ -156,7 +161,8 @@ function mapStateToProps(state) {
   return {
     userReducer: state.userReducer,
     youtubeReducer: state.youtubeReducer,
-    roomReducer: state.roomReducer
+    roomReducer: state.roomReducer,
+    chatReducer: state.chatReducer
   };
 }
 

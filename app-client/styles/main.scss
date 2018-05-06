@@ -10,6 +10,19 @@
   background-color: #f2f3f5;
 }
 
+.chat {
+  flex: 8;
+}
+
+#chat-textarea {
+  flex: 1;
+  margin: 0.5rem 0;
+}
+
+#chat-btn {
+  // flex: 1;
+  margin: 0.5rem 0;
+}
 // queue
 .queue-bg {
   background-color: #f2f3f5;
