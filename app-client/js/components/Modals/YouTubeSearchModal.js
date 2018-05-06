@@ -9,7 +9,6 @@ class YouTubeSearchModal extends React.Component {
     this.state = {
       search: ''
     };
-    console.log(props);
   }
 
   handleChange = (e) => {
@@ -34,7 +33,6 @@ class YouTubeSearchModal extends React.Component {
 
   renderVideos = () => {
     const { videos } = this.props.youtubeReducer;
-    console.log(videos);
     return videos.map((video) =>
       (
         <div className="row p-2 video-search-card">

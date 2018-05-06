@@ -19,7 +19,6 @@ class HomeContainer extends React.Component {
     const { rooms } = this.props.roomReducer;
     return !rooms ? null : (
       rooms.map((room, index) => {
-        console.log(room);
         return (
           <div className="col-md-6 mb-3" key={room.id}>
             <div className="card">
@@ -36,7 +35,6 @@ class HomeContainer extends React.Component {
   }
 
   render () {
-    console.log(this.props);
     const { redirectToRoom, roomId, fetchingRooms } = this.props.roomReducer;
     if (redirectToRoom) {
       this.props.history.push(`room/${roomId}`);

@@ -3,9 +3,6 @@ const DataTypes = require('sequelize/lib/data-types');
 const CurrentVideo = require('../models/CurrentVideo')(sequelize, DataTypes);
 
 exports.postCurrentVideo = (req, res) => {
-
-  // console.log(req.body);
-
   CurrentVideo.findOne({where: {roomId: req.body.roomId}})
     .then((videoRecord) => {
       if (videoRecord) {
@@ -25,7 +22,6 @@ exports.postCurrentVideo = (req, res) => {
 
 exports.putCurrentVideo = (req, res) => {
   const video = req.body.video;
-  console.log(req.body);
   CurrentVideo.update({
     videoId: video.id,
     channelId: video.snippet.channelId,

@@ -23,7 +23,6 @@ export function fetchCurrentVideo(roomId) {
       data: { roomId }
     })
     .then((response) => {
-      console.log(response);
       return {
         type: 'CURRENT_VIDEO_FETCHED',
         payload: response.data,
@@ -45,7 +44,6 @@ export function changeCurrentVideo(video, roomId) {
       }
     })
     .then((response) => {
-      console.log(video);
       return {
         type: 'CHANGE_CURRENT_VIDEO',
         payload: video
@@ -71,7 +69,6 @@ export function searchVideo(q) {
       }
     })
     .then((response) => {
-      console.log(response);
       const videos = response.data.items;
       dispatch(videosFetched(videos));
     })

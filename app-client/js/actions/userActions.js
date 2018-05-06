@@ -81,7 +81,6 @@ export function login(user, token) {
       },
     })
     .then((response) => {
-      console.log(response);
       if (response.data.error) {
         dispatch(errorFetchingUser(response.data.error));
       } else if (response.data.token) {

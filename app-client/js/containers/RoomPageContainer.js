@@ -27,7 +27,6 @@ class RoomPageContainer extends React.Component {
   onReady = (video) => {
     const that = this;
     this.setState({ yt: video });
-    console.log(video);
     const { socket } = this.props.roomReducer;
 
     socket.on('youtube_playVideo', function(playTime){
@@ -56,11 +55,11 @@ class RoomPageContainer extends React.Component {
   }
 
   onPlay = () => {
-    console.log('now playing')
+
   }
 
   onPause = () => {
-    console.log('now paused')
+
   }
 
   onStateChange = (video) => {
@@ -86,7 +85,6 @@ class RoomPageContainer extends React.Component {
     } else if (!validatingRoomPage && !roomExists) {
       return <Redirect to='/' />
     }
-    console.log(currentVideo);
     return currentVideo ? (
       <div className="full-page row m-0">
         <QueueSidebar {...this.props} />

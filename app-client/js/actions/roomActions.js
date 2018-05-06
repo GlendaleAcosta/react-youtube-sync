@@ -53,7 +53,6 @@ export function createRoom(roomTitle, username) {
       }
     })
     .then((response) => {
-      console.log(response);
       if (response.data.roomId) {
         dispatch(goToNewlyCreatedRoom(response.data.roomId));
       }
@@ -74,7 +73,6 @@ export function fetchRooms() {
       data: null
     })
     .then((response) => {
-      console.log(response);
       dispatch(roomsFetched(response.data.rooms));
     })
     .catch((error) => {
