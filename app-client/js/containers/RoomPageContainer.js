@@ -3,7 +3,7 @@ import io from 'socket.io-client'
 import { connect } from 'react-redux';
 import { openModal } from 'actions/modalActions';
 import { initiateSocket, validateRoomPage, resetRoomState } from 'actions/roomActions';
-import { changeCurrentVideo } from 'actions/YouTubeActions';
+import { changeCurrentVideo, fetchCurrentVideo } from 'actions/YouTubeActions';
 import YouTube from 'react-youtube';
 import PlayerControls from 'components/RoomPage/PlayerControls';
 import QueueSidebar from 'components/RoomPage/QueueSidebar';
@@ -21,6 +21,7 @@ class RoomPageContainer extends React.Component {
     props.dispatch(initiateSocket(
       io('/', {query: {roomId: props.match.params.roomId}}),
     ));
+    props.dispatch(fetchCurrentVideo(props.match.params.roomId));
   }
 
   onReady = (video) => {
@@ -85,7 +86,8 @@ class RoomPageContainer extends React.Component {
     } else if (!validatingRoomPage && !roomExists) {
       return <Redirect to='/' />
     }
-    return (
+    console.log(currentVideo);
+    return currentVideo ? (
       <div className="full-page row m-0">
         <QueueSidebar {...this.props} />
         <div className="col-md-7 overflow-scroll">
@@ -130,7 +132,7 @@ class RoomPageContainer extends React.Component {
         </div>
 
       </div>
-    )
+    ) : null;
   }
 }
 

@@ -54,8 +54,9 @@ export function createRoom(roomTitle, username) {
     })
     .then((response) => {
       console.log(response);
-      if (response.data.roomId)
+      if (response.data.roomId) {
         dispatch(goToNewlyCreatedRoom(response.data.roomId));
+      }
     })
     .catch((error) => {
       console.log(error);

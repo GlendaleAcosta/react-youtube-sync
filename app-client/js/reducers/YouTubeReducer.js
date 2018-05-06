@@ -2,13 +2,14 @@ export default function reducer(state = {
   videos: [],
   fetchingVideos: false,
   fetchingCurrentVideo: false,
-  currentVideo: {
-    id: 'QhBnZ6NPOY0',
-    snippet: {
-      description: 'sasuke is attempting to destroy the hidden leaf village but naruto refuses to let that happen! (instagram: @kingvader) follow me for more videos! WHAT TEAM ARE YOU! TEAM NARUTO OR SASUKE!?...',
-      title: '"HOOD NARUTO" pt.3 (full video) naruto vs sasuke'
-    }
-  },
+  currentVideo: null
+  // currentVideo: {
+  //   id: 'QhBnZ6NPOY0',
+  //   snippet: {
+  //     description: 'sasuke is attempting to destroy the hidden leaf village but naruto refuses to let that happen! (instagram: @kingvader) follow me for more videos! WHAT TEAM ARE YOU! TEAM NARUTO OR SASUKE!?...',
+  //     title: '"HOOD NARUTO" pt.3 (full video) naruto vs sasuke'
+  //   }
+  // },
 }, action) {
   switch (action.type) {
     case 'FETCH_VIDEOS': {
@@ -35,6 +36,12 @@ export default function reducer(state = {
       return {
         ...state,
         currentVideo: action.payload
+      }
+    }
+    case 'CURRENT_VIDEO_FETCHED': {
+      return {
+        ...state,
+        currentVideo: action.payload,
       }
     }
     default: return state;

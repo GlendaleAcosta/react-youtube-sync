@@ -14,18 +14,46 @@ function videosFetched(videos) {
   };
 }
 
-export function fetchCurrentVideo(video) {
-  return {
-    type: 'FETCH_CURRENT_VIDEO',
-    payload: video,
-  };
+
+export function fetchCurrentVideo(roomId) {
+    // dispatch(fetchVideos());
+    return axios({
+      method: 'POST',
+      url: '/api/current-video',
+      data: { roomId }
+    })
+    .then((response) => {
+      console.log(response);
+      return {
+        type: 'CURRENT_VIDEO_FETCHED',
+        payload: response.data,
+      };
+    })
+    .catch((error) => {
+      console.log(error);
+      // dispatch(errorFetchingUser(error));
+    });
 }
 
-export function changeCurrentVideo(videoId) {
-  return {
-    type: 'CHANGE_CURRENT_VIDEO',
-    payload: videoId,
-  };
+export function changeCurrentVideo(video, roomId) {
+    return axios({
+      method: 'PUT',
+      url: '/api/current-video',
+      data: {
+        video,
+        roomId
+      }
+    })
+    .then((response) => {
+      console.log(video);
+      return {
+        type: 'CHANGE_CURRENT_VIDEO',
+        payload: video
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 }
 
 export function searchVideo(q) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { searchVideo, fetchCurrentVideo } from 'actions/YouTubeActions';
+import { searchVideo, changeCurrentVideo } from 'actions/YouTubeActions';
 import { closeModal } from 'actions/modalActions';
 
 
@@ -9,6 +9,7 @@ class YouTubeSearchModal extends React.Component {
     this.state = {
       search: ''
     };
+    console.log(props);
   }
 
   handleChange = (e) => {
@@ -21,12 +22,12 @@ class YouTubeSearchModal extends React.Component {
   }
 
   setVideo = (video) => {
-    const {socket} = this.props.roomReducer;
+    const {socket, currentRoom } = this.props.roomReducer;
     const newVideo = {
       id: video.id.videoId,
       snippet: video.snippet
     };
-    this.props.dispatch(fetchCurrentVideo(newVideo));
+    this.props.dispatch(changeCurrentVideo(newVideo, currentRoom.id));
     this.props.dispatch(closeModal());
     socket.emit('youtube_currentVideo', newVideo);
   }

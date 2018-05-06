@@ -16,7 +16,6 @@ class CreateRoomModal extends React.Component {
 
   createRoom = (e) => {
     e.preventDefault();
-    console.log(this.state.roomTitle);
     const { roomTitle } = this.state;
     const { user } = this.props.userReducer;
     const username = user ? user.username : localStorage.getItem('GuestName');
