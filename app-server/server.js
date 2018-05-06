@@ -22,8 +22,11 @@ app.use(express.static(path.join(__dirname, '../build')))
 const userCtrl = require('./controllers/userCtrl');
 const roomCtrl = require('./controllers/roomCtrl');
 const roomListCtrl = require('./controllers/roomListCtrl');
+const currentVideoCtrl = require('./controllers/currentVideoCtrl');
 
 // Routes
+app.put('/api/current-video', currentVideoCtrl.putCurrentVideo);
+app.post('/api/current-video', currentVideoCtrl.postCurrentVideo);
 app.post('/api/room-list', roomListCtrl.postRoomList);
 app.post('/room', roomCtrl.postRoom);
 app.post('/sign-up', userCtrl.postSignUp);
@@ -38,7 +41,6 @@ io.on('connection', function(socket){
   socket.join(roomId, () => {
     console.log(`${socket.id} joined room ${roomId}`);
   });
-
 
   socket.on('chat message', function(chatLine){
     io.to(roomId).emit('chat', chatLine);
