@@ -9,6 +9,7 @@ import PlayerControls from 'components/RoomPage/PlayerControls';
 import QueueSidebar from 'components/RoomPage/QueueSidebar';
 import VideoDetails from 'components/RoomPage/VideoDetails';
 import { Redirect } from 'react-router-dom';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 class RoomPageContainer extends React.Component {
   constructor(props) {
@@ -16,6 +17,9 @@ class RoomPageContainer extends React.Component {
     this.state = {
       yt: null,
       playerState: -1,
+      currentTimeSet: false,
+      copied: false,
+      value: `http://localhost:3000/room/${props.match.params.roomId}`
     }
     props.dispatch(validateRoomPage(props.match.params.roomId));
     props.dispatch(initiateSocket(
@@ -26,6 +30,7 @@ class RoomPageContainer extends React.Component {
 
   onReady = (video) => {
     const that = this;
+
     this.setState({ yt: video });
     const { socket } = this.props.roomReducer;
 
@@ -55,11 +60,11 @@ class RoomPageContainer extends React.Component {
   }
 
   onPlay = () => {
-
+    // move the player
   }
 
   onPause = () => {
-
+    // stop the player
   }
 
   onStateChange = (video) => {
@@ -74,6 +79,14 @@ class RoomPageContainer extends React.Component {
 
   componentWillUnmount() {
     this.props.dispatch(resetRoomState());
+  }
+
+  handleCopy = () => {
+    this.setState({copied: true})
+    const that = this;
+    setTimeout(() => {
+      that.setState({copied: false})
+    }, 1000)
   }
 
   render () {
@@ -94,8 +107,13 @@ class RoomPageContainer extends React.Component {
                 <h5 className="card-title">{currentRoom.title}</h5>
                 <p className="card-text">Host: {currentRoom.host}</p>
               </div>
-              <div className="card-footer text-muted">
-                Share this url with your friends {`http://localhost:3000/room/${this.props.match.params.roomId}`}
+              <div className="card-footer text-muted d-flex justify-content-end">
+                <CopyToClipboard text={this.state.value}
+                  onCopy={this.handleCopy}>
+                  <span className="btn btn-info">
+                    {this.state.copied ? 'Copied to clipboard!' :' Copy Url and share with your friends!'}
+                  </span>
+                </CopyToClipboard>
               </div>
             </div>
 

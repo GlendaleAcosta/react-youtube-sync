@@ -4,6 +4,8 @@ class PlayerControls extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.progressBar = React.createRef();
+    console.log(this.progressBar);
   }
 
   renderPlayBtn = () => {
@@ -16,10 +18,14 @@ class PlayerControls extends React.Component {
     return <i className="material-icons">play_arrow</i>
   }
 
+  test = (e) => {
+    console.log(e);
+  }
+
   render () {
     return (
       <div className="player-control row m-0">
-        <div className="progress-bar"></div>
+        <div onClick={(e) => this.test(e)} className="progress-bar" ref={this.progressBar}></div>
         <div className="play-btn d-flex justify-content-center align-items-center">
           {this.renderPlayBtn()}
         </div>
