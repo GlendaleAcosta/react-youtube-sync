@@ -41,9 +41,11 @@ class RoomPageContainer extends React.Component {
     });
 
     socket.on('youtube_playVideo', function(playTime){
+      video.target.seekTo(playTime);
       video.target.playVideo();
     });
     socket.on('youtube_pauseVideo', function(pauseTime){
+      video.target.seekTo(pauseTime);
       video.target.pauseVideo();
     });
     socket.on('current_video', function(video){

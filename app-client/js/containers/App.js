@@ -7,6 +7,7 @@ import { login, initalUserFetched } from 'actions/userActions';
 import { connect } from 'react-redux';
 import ModalContainer from 'containers/ModalContainer';
 import HomeContainer from 'containers/HomeContainer';
+import ProfileContainer from 'containers/ProfileContainer';
 import shortid from 'shortid';
 
 class App extends React.Component {
@@ -47,7 +48,7 @@ class App extends React.Component {
     }
     else if (user){
       if (parseInt(props.match.params.id, 10) === this.props.userReducer.user.id)
-        return <h1>We good</h1>
+        return <ProfileContainer {...props} />
       else
         return <Redirect to="/" />
     }

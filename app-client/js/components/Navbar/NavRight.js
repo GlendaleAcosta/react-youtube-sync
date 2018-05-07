@@ -5,12 +5,15 @@ import { logout } from 'actions/userActions';
 class NavRight extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showMenu: false
+    };
   }
 
   logout = (e) => {
     e.preventDefault();
     this.props.dispatch(logout());
+    this.setState({showMenu: false});
   }
 
   renderNav = () => {
@@ -19,13 +22,21 @@ class NavRight extends React.Component {
       return (
         <ul className="navbar-nav dropdown">
           <li className="nav-item">
-            <Link className="nav-link dropdown-toggle" to="/profile">{user.email}</Link>
+            <a
+              onClick={() => this.setState({showMenu: !this.state.showMenu})}
+              className="nav-link dropdown-toggle btn"
+            >
+              {user.email}
+            </a>
           </li>
+          {
+          this.state.showMenu ?
           <div className="dropdown-menu show">
             <Link className="dropdown-item" to={`/profile/${user.id}`}>View Profile</Link>
-            <Link className="dropdown-item" to="/">Settings</Link>
             <a href="/"onClick={this.logout} className="dropdown-item">Logout</a>
           </div>
+          : null
+          }
         </ul>
       )
     else {
