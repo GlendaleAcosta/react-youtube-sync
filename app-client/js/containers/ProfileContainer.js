@@ -29,7 +29,6 @@ class ProfileContainer extends React.Component {
               </li>
             </ul>
 
-
             <div className="card">
               <div className="card-body">
                  <label>Email address</label>
