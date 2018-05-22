@@ -65,8 +65,7 @@
   },
   "scripts": {
     "server": "nodemon app-server/server.js",
-    "start": "node scripts/start.js",
-    "postinstall": "cd app-server && node_modules/.bin/sequelize db:migrate",
+    "start": "npm run build && node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
