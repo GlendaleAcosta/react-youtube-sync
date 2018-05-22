@@ -6,8 +6,15 @@ exports.postRoomList = (req, res) => {
   Room
     .findAll({ limit: 10 })
     .then((rooms) => {
-      return res.json({
-        rooms
-      });
+      if (rooms) {
+        return res.json({
+          rooms
+        });
+      }
+      else {
+        return res.json({
+          rooms: []
+        })
+      }
     });
 };
