@@ -21,4 +21,13 @@ const sequelize = new Sequelize('23khdps6gdcrn host=ec2-50-19-224-165.compute-1.
   },
 });
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
 module.exports = sequelize;
