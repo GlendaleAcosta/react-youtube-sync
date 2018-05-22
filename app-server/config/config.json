@@ -5,5 +5,14 @@
     "database": "youtube_sync_db",
     "host": "127.0.0.1",
     "dialect": "postgres"
+  },
+  "production": {
+  "username": "atugtkezijifrl",
+  "password": "02cbd4b91746016d3e2fe865abc8d2909f8def9df791a7463f182918ac60bd71",
+  "database": "23khdps6gdcrn host=ec2-50-19-224-165.compute-1.amazonaws.com",
+  "host": "ec2-50-19-224-165.compute-1.amazonaws.com",
+  "dialect":"postgres",
+  "protocol":"postgres",
+  "port":"5432"
   }
 }
