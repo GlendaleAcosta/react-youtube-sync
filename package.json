@@ -65,7 +65,7 @@
   },
   "scripts": {
     "server": "nodemon app-server/server.js",
-    "start": "npm run build && node app-server/server.js",
+    "start": "cd app-server && node_modules/.bin/sequelize db:migrate && npm run build && node app-server/server.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
