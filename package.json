@@ -63,12 +63,14 @@
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
   },
+  "main": "npm run build && npm run start",
   "scripts": {
     "db:migrate": "cd app-server && ../node_modules/.bin/sequelize db:migrate",
     "server": "nodemon app-server/server.js",
-    "start": "npm run db:migrate && npm run build && node app-server/server.js",
+    "start": "node app-server/server.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "postInstall": "npm run build"
   },
   "jest": {
     "collectCoverageFrom": [
